@@ -1,60 +1,51 @@
 ## Aim:- Develop and deploy a portfolio Azure static Web App on a custom domain (tushargalhotra.shop) creating and using git repository, In this pursuit I downloaded a web template and customise it then commited to the repository and then using Azure static web app then configure a custom domain
 
+flowchart LR
+    Dev[Developer: Push code to GitHub] -->|Commit| Repo[GitHub Repo]
+    Repo -->|CI/CD via GitHub Actions| Azure[AWS Static Web App]
+    Azure --> Domain[Custom Domain: tushargalhotra.shop]
+    Domain --> User[End Users Access Website]
 
-### Step 1: Create a New Git Repository
 
-1. **Open your terminal (Command Prompt, PowerShell, or Git Bash)**.
-2. **Navigate to the directory** where your `index.html` file is located. For example:
-   ```bash
-   cd "C:\Users\Kshipra\Downloads\SnapFolio\SnapFolio"
-   ```
+Technologies Used
 
-3. **Initialize a new Git repository**:
+   Azure Static Web App for hosting
+   GitHub Actions for CI/CD
+   Git + GitHub for version control
+
+
+Deployment Steps
+
+Initialize Git repository & push code to GitHub
 
    git init
+   git add .
+   git commit -m "Initial commit with portfolio template"
+   git remote add origin <repo-url>
+   git push -u origin main
 
 
-4. **Add your HTML file to the repository**:
-   
-   git add index.html
+Create Azure Static Web App
 
+   Go to Azure Portal → “Static Web App” → Connect GitHub repo.
+   Select branch (main) and build presets (custom/static).
 
-5. **Commit your changes**:
-   git commit -m "Initial commit with index.html"
+Add Custom Domain
 
-### Step 2: Create a Remote Repository on GitHub
+   In Static Web App → Custom domains → Add tushargalhotra.shop.
+   Configure DNS (CNAME record).
+   Verify and apply SSL certificate.
 
-1. **Go to [GitHub](https://github.com)** and log in to your account.
-2. **Click on the "+" icon** in the top right corner and select "New repository".
-3. **Fill in the repository details**:
-   - Repository name (`myportal`)
-   - Description (optional)
-   - Choose "Public"
-   - Do not initialize with a README (since you already have files to push)
-4. **Click on "Create repository"**.
+🔄 CI/CD Workflow
 
-### Step 3: Link Your Local Repository to GitHub
+   Every push to main triggers GitHub Actions.
+   Workflow builds the static files and deploys them to Azure automatically.
 
-1. **Copy the repository URL** (HTTPS or SSH).
-2. **In your terminal**, link your local repository to the remote one:
+🌍 Live Demo
+   👉 tushargalhotra.shop
 
-   git remote add origin <repository-url>
+🛠️ Troubleshooting
 
-
-3. **Push your changes to GitHub**:
-   git push -u origin master
-
-### Step 4: Create a Static Web App
-
-You can use various platforms to host your static web app. Here, I'll show you how to do it using GitHub Pages:
-
-
-
-### Step 5: Access Your Static Web App
-
-- After setting up GitHub Pages, you can access your static web app at the URL provided in the "Pages" section of your repository settings. It will typically be in the format:
-  ```
-  https://<username>.github.io/<repository-name>/
-  ```
-
-I have successfully created a Git repository, pushed your HTML code, and deployed it as a static web app
+      404 error after deployment → Check index.html in root.
+      Domain not resolving → Verify DNS records in your registrar.
+      SSL error → Re-bind certificate in Azure portal.
